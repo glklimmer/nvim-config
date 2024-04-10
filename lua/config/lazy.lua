@@ -24,6 +24,9 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.java" },
 
+    -- copilot
+    { import = "lazyvim.plugins.extras.coding.copilot" },
+
     -- formatting
     { import = "lazyvim.plugins.extras.formatting.prettier" },
 
