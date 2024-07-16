@@ -1,21 +1,30 @@
 return {
-  -- vue tree sitter
-
-  -- vue lsp
-  {
-    "williamboman/mason.nvim",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
-        "vue-language-server",
-      })
-    end,
-  },
-
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        volar = {},
+        tsserver = {
+          setup = {
+            init_options = {
+              plugins = {
+                {
+                  name = "@vue/typescript-plugin",
+                  location = "/path/to/@vue/language-server",
+                  languages = { "vue" },
+                },
+              },
+            },
+          },
+        },
+        volar = {
+          setup = {
+            init_options = {
+              vue = {
+                hybridMode = false,
+              },
+            },
+          },
+        },
       },
     },
   },
