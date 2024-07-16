@@ -30,6 +30,9 @@ require("lazy").setup({
     -- formatting
     { import = "lazyvim.plugins.extras.formatting.prettier" },
 
+    -- coding
+    { import = "lazyvim.plugins.extras.coding.mini-surround" },
+
     -- import/override with your plugins
     { import = "plugins" },
   },
