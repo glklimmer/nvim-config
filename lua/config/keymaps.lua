@@ -47,3 +47,8 @@ vim.api.nvim_set_keymap(
   "<Esc>/\\%V", -- Command: Escape to normal mode, then start search within the visual selection
   { noremap = true, silent = true } -- Options: non-recursive mapping, silent execution
 )
+
+-- Add bacon
+local map = LazyVim.safe_keymap_set
+map("n", "!", ":BaconLoad<CR>:w<CR>:BaconNext<CR>", { desc = "Navigate to next bacon location" })
+map("n", ",", ":BaconList<CR>", { desc = "Open bacon locations list" })
