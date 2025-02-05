@@ -69,5 +69,13 @@ return {
   -- git diffview
   {
     "sindrets/diffview.nvim",
+    config = function()
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>fh",
+        ":DiffviewFileHistory %<CR>",
+        { noremap = true, silent = true, desc = "File (git) history" }
+      )
+    end,
   },
 }
