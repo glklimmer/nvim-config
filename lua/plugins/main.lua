@@ -32,21 +32,24 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-    opts = function()
-      return {
-        options = {
-          theme = "auto",
-          globalstatus = true,
-          disabled_filetypes = { statusline = { "dashboard", "alpha" } },
+    opts = function(_, opts)
+      local mode = require("noice").api.status.mode
+
+      opts.sections.lualine_x = {
+        {
+          mode.get,
+          cond = mode.has,
+          color = { fg = "#ff9e64" },
         },
-        sections = {
-          lualine_y = {
-            { "location", padding = { left = 0, right = 1 } },
-          },
-          lualine_z = {},
-        },
-        extensions = { "neo-tree", "lazy" },
       }
+
+      opts.sections.lualine_y = {
+        { "location", padding = { left = 0, right = 1 } },
+      }
+      opts.sections.lualine_z = {}
+      opts.extensions = { "neo-tree", "lazy" }
+
+      return opts
     end,
   },
 
