@@ -24,12 +24,21 @@ return {
   -- use ruby lsp instead of solargraph
   {
     "neovim/nvim-lspconfig",
-    opts = function(_, opts)
-      opts.servers = opts.servers or {}
-
-      opts.servers.solargraph = nil
-
-      opts.servers.ruby_lsp = {}
-    end,
+    opts = {
+      servers = {
+        ruby_lsp = {
+          enabled = true,
+        },
+        solargraph = {
+          enabled = false,
+        },
+        rubocop = {
+          enabled = true,
+        },
+        standardrb = {
+          enabled = false,
+        },
+      },
+    },
   },
 }
