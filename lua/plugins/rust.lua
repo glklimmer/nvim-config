@@ -28,4 +28,18 @@ return {
       })
     end,
   },
+
+  -- nicer rust diagnostics
+  {
+    "alexpasmantier/krust.nvim",
+    ft = "rust",
+    keys = {
+      { "<leader>cd", "<cmd>Krust<CR>", desc = "Krust diagnostics" },
+    },
+    opts = {
+      float_win = {
+        border = "solid", -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
+      },
+    },
+  },
 }
