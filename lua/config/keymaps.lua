@@ -48,7 +48,54 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true } -- Options: non-recursive mapping, silent execution
 )
 
--- Add bacon
+-- =========================
+-- Filetype-specific "!" and "," mappings
+-- Rust  -> Bacon
+-- TS/Vue -> LSP diagnostics via Trouble
+-- =========================
+
 local map = LazyVim.safe_keymap_set
-map("n", "!", ":BaconLoad<CR>:w<CR>:BaconNext<CR>", { desc = "Navigate to next bacon location" })
-map("n", ",", ":BaconList<CR>", { desc = "Open bacon locations list" })
+
+-- helper for buffer-local mappings
+local function buf_map(bufnr, mode, lhs, rhs, opts)
+  opts = opts or {}
+  opts.buffer = bufnr
+  map(mode, lhs, rhs, opts)
+end
+
+-- Rust: Bacon
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "rust" },
+  callback = function(ev)
+    buf_map(ev.buf, "n", "!", ":BaconLoad<CR>:w<CR>:BaconNext<CR>", {
+      desc = "Next bacon location",
+    })
+
+    buf_map(ev.buf, "n", ",", ":BaconList<CR>", {
+      desc = "Bacon locations list",
+    })
+  end,
+})
+
+-- TypeScript / Vue: Trouble
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "vue",
+  },
+  callback = function(ev)
+    -- Next diagnostic (like BaconNext)
+    buf_map(ev.buf, "n", "!", function()
+      vim.cmd("write")
+      vim.diagnostic.goto_next({ float = false })
+    end, { desc = "Next diagnostic" })
+
+    -- Diagnostics list via Trouble (buffer-local)
+    buf_map(ev.buf, "n", ",", function()
+      vim.cmd("Trouble diagnostics toggle filter.buf=0")
+    end, { desc = "Diagnostics list (Trouble)" })
+  end,
+})
