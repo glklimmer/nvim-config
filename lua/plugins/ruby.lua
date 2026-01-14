@@ -28,6 +28,13 @@ return {
       servers = {
         ruby_lsp = {
           enabled = true,
+          init_options = {
+            addonSettings = {
+              ["Ruby LSP Rails"] = {
+                enablePendingMigrationsPrompt = false,
+              },
+            },
+          },
         },
         solargraph = {
           enabled = false,
