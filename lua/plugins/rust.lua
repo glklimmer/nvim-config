@@ -33,13 +33,20 @@ return {
   {
     "alexpasmantier/krust.nvim",
     ft = "rust",
-    keys = {
-      { "<leader>cd", "<cmd>Krust<CR>", desc = "Krust diagnostics" },
-    },
     opts = {
       float_win = {
-        border = "solid", -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
+        border = "solid",
       },
     },
+    config = function(_, opts)
+      require("krust").setup(opts)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "rust",
+        callback = function()
+          vim.keymap.set("n", "<leader>cd", "<cmd>Krust<CR>", { desc = "Krust diagnostics", buffer = true })
+        end,
+      })
+    end,
   },
 }
