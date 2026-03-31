@@ -5,3 +5,5 @@
 vim.g.snacks_animate = false
 
 vim.g.lazyvim_picker = "telescope"
+
+vim.lsp.set_log_level("WARN")
